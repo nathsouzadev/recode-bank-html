@@ -5,6 +5,12 @@ const accountInfo = {
     balance: 20.50
 }
 
+const api = new Promise((resolve) => {
+	setTimeout(() => {
+  	resolve(accountInfo)
+  }, 2500)
+})
+
 const initAccount = () => {
     const date = new Date()
     document.querySelector('#date-info').innerHTML = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`
@@ -19,12 +25,13 @@ const incomming = (event) => {
     initAccount()
 }
 
-const login = (event) => {
+const login = async (event) => {
     event.preventDefault()
     const user = document.querySelector('#inputEmail').value
     const password = document.querySelector('#inputPassword').value
-    if(user !== accountInfo.email || password !== accountInfo.password){
-        alert('Email/senha incorretos')
+    const userData = await api
+    if(user !== userData.email || password !== userData.password){
+        return alert('Email/senha incorretos')
     }
 
     window.location = '/conta.html'
